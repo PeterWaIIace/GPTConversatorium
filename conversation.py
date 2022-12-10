@@ -7,7 +7,8 @@ import time
 class ConversationRoom:
 
     def __init__(self,firstGPT_config,secondGPT_config,recording_filename):
-        self.init_message = "Start Conversation"
+        self.init_message = "I want you to have respond to another AI. I will send you its inputs as messages and you will respond."+\
+                            "Please ask random question to start conversation:"
 
         # https://github.com/acheong08/ChatGPT/wiki/Setup
 
@@ -20,7 +21,7 @@ class ConversationRoom:
 
     def update_file(self,gpt,message):
         with open(self.filename,"a") as f:
-            scribe = "\n{\"Time\":\""+str(time.time())+"\"gpt\":\""+gpt+"\"message\":\""+message+"\"}\n"
+            scribe = "\n{\"Time\":\""+str(time.time())+"\"\"gpt\":\""+gpt+"\"\"message\":\""+message+"\"}\n"
             f.write(scribe)
 
     def run(self):
@@ -28,9 +29,9 @@ class ConversationRoom:
         response = self.chatGPT_1.get_chat_response(self.init_message, output="text")["message"]
         self.update_file("gpt1",response)
         while(True):
-            response = self.chatGPT_2.get_chat_response(response, output="text")["message"]
+            response = self.chatGPT_2.get_chat_response("gpt2: "+response, output="text")["message"]
             self.update_file("gpt2",response)
-            response = self.chatGPT_1.get_chat_response(response, output="text")["message"]
+            response = self.chatGPT_1.get_chat_response("gpt1: "+response, output="text")["message"]
             self.update_file("gpt1",response)
 
 
