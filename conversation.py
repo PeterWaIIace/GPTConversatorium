@@ -35,13 +35,13 @@ class ConversationRoom:
 
 
 config_1 = {
-    "email":"PW4ltz@proton.me",
-    "password": "DXE8q#1*mBqsLFDtj$mQ"
+    "email":"*",
+    "password": "*"
 }
 
 config_2 = {
-    "email":"PW4ltz@proton.me",
-    "password": "DXE8q#1*mBqsLFDtj$mQ"
+    "email":"*",
+    "password": "*"
 }
 
 # returns {'message':message, 'conversation_id':self.conversation_id, 'parent_id':self.parent_id}
