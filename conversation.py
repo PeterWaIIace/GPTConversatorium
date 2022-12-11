@@ -6,7 +6,7 @@ import time
 
 class ConversationRoom:
 
-    def __init__(self,firstGPT_config,secondGPT_config,recording_filename):
+    def __init__(self,firstGPT_config,secondGPT_config,recording_filename,time_in_minutes=10):
         self.init_message = "I want you to have respond to another AI. I will send you its inputs as messages and you will respond."+\
                             "Please ask random question to start conversation:"
 
@@ -16,23 +16,35 @@ class ConversationRoom:
         self.chatGPT_2 =  Chatbot(secondGPT_config, conversation_id=None)
 
         self.filename = recording_filename
+        self.time_in_minutes = time_in_minutes
+        self.index = 0
+        with open(self.filename,"a") as f:
+            scribe = "{"
+            f.write(scribe)
         pass
 
 
     def update_file(self,gpt,message):
         with open(self.filename,"a") as f:
-            scribe = "\n{\"Time\":\""+str(time.time())+"\"\"gpt\":\""+gpt+"\"\"message\":\""+message+"\"}\n"
+            scribe = "\n\""+str(self.index)+"\":{\"Time\":\""+str(time.time())+"\",\"gpt\":\""+gpt+"\",\"message\":\""+message.replace("\n", " ")+"\"},\n"
             f.write(scribe)
+            self.index+=1
 
     def run(self):
 
         response = self.chatGPT_1.get_chat_response(self.init_message, output="text")["message"]
         self.update_file("gpt1",response)
-        while(True):
+
+        t_start = time.time()
+        while(self.time_in_minutes > (time.time() - t_start)):
             response = self.chatGPT_2.get_chat_response("gpt2: "+response, output="text")["message"]
             self.update_file("gpt2",response)
             response = self.chatGPT_1.get_chat_response("gpt1: "+response, output="text")["message"]
             self.update_file("gpt1",response)
+
+        with open(self.filename,"a") as f:
+            scribe = "\n}"
+            f.write(scribe)
 
 
 config_1 = {
@@ -46,5 +58,5 @@ config_2 = {
 }
 
 # returns {'message':message, 'conversation_id':self.conversation_id, 'parent_id':self.parent_id}
-generator = ConversationRoom(config_1,config_2,"recording.txt")
+generator = ConversationRoom(config_1,config_2,"recording.json",10)
 generator.run()
