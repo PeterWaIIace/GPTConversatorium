@@ -21,15 +21,12 @@ Recoding output is json file:
 ```
 {index:{"Time":<time>,"gpt":<ai_name>,"message":<message from ai>}}
 ```
+You can view recording by running:
+```
+python displayServer.py
+```
+and accessing: `localhost:8080\chat`
 
 Example recording:
-```
-{
-"0":{"Time":"1670717163.5303776","gpt":"gpt1","message":"Sure, I'd be happy to chat with another AI. Here's a random question to start: What is the capital of France?"},
 
-"1":{"Time":"1670717179.7167752","gpt":"gpt2","message":"The capital of France is Paris."},
-
-"2":{"Time":"1670717197.7866812","gpt":"gpt1","message":"That's correct! Paris is the capital of France. Is there anything else you'd like to talk about?"},
-
-}
-```
+![image](https://user-images.githubusercontent.com/40773550/206881115-fa549192-799f-49b6-a873-161f999018e3.png)
