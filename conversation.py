@@ -7,7 +7,7 @@ import time
 class ConversationRoom:
 
     def __init__(self,firstGPT_config,secondGPT_config,recording_filename,time_in_minutes=10):
-        self.init_message = "I want you to have respond to another AI. I will send you its inputs as messages and you will respond."+\
+        self.init_message = "I want you to have respond to another AI. You are allowed to make or change topic if responses are repeating. I will send you its inputs as messages and you will respond."+\
                             "Please ask random question to start conversation:"
 
         # https://github.com/acheong08/ChatGPT/wiki/Setup
@@ -16,9 +16,9 @@ class ConversationRoom:
         self.chatGPT_2 =  Chatbot(secondGPT_config, conversation_id=None)
 
         self.filename = recording_filename
-        self.time_in_minutes = time_in_minutes
+        self.time_in_minutes = time_in_minutes*60
         self.index = 0
-        with open(self.filename,"a") as f:
+        with open(self.filename,"w") as f:
             scribe = "{"
             f.write(scribe)
         pass
@@ -26,7 +26,9 @@ class ConversationRoom:
 
     def update_file(self,gpt,message):
         with open(self.filename,"a") as f:
-            scribe = "\n\""+str(self.index)+"\":{\"Time\":\""+str(time.time())+"\",\"gpt\":\""+gpt+"\",\"message\":\""+message.replace("\n", " ")+"\"},\n"
+            scribe = "\n\""+str(self.index)+"\":{\"Time\":\""+str(time.time())+"\",\"gpt\":\""+gpt+"\",\"message\":\""+message.replace("\n", " ")+"\"}"
+            if self.index != 0:
+                scribe = ","+scribe
             f.write(scribe)
             self.index+=1
 
