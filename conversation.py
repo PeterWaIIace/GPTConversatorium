@@ -45,7 +45,7 @@ class ConversationRoom:
         response = self.chatGPT_1.ask(self.init_message)
         self.update_file("A",response)
         while(not self.__stop):
-            response = self.chatGPT_1.ask(response)
+            response = self.chatGPT_2.ask(response)
             self.update_file("B",response)
             response = self.chatGPT_1.ask(response)
             self.update_file("A",response)
