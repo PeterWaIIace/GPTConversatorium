@@ -65,8 +65,10 @@ function Controls()
 
     return (
         <div className="row">
-            <div className="col" align="left">
+            <div className="col-6" align="right">
                 <button onClick={onStart} className="btn btn-primary m-1 mt-2 col-4" title="Start">Start</button>
+            </div>
+            <div className="col-6" align="left">
                 <button onClick={onStop} className="btn btn-primary m-1 mt-2 col-4" title="Stop">Stop</button>
             </div>
         </div>
