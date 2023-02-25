@@ -24,7 +24,7 @@ function Names()
         <div className="row">
             <div className="col-6">
                 <div className="form-outline">
-                    <textarea className="form-control" id="displayName1" rows="1" onChange={handleName1} style={{ background: 'rgba(10,0,0,.5)'}} value={displayName1}></textarea>
+                    <textarea className="form-control" id="displayName1" rows="1" onChange={handleName1} style={{ background: 'rgba(10,0,0,.2)'}} value={displayName1}></textarea>
                 </div>
             </div>
             <div className="col-6">
