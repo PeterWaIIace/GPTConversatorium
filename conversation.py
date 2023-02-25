@@ -26,10 +26,12 @@ class ConversationRoom:
 
     def update_file(self,gpt,message):
         with open(self.filename,"a") as f:
-            scribe = "\n<li>\"Time\":\""+str(time.time())+"\"gpt\":\""+gpt+"\"message\":\""+message+"\"</li>\n"
+            scribe = f"\n<li>{message}</li>\n"
             f.write(scribe)
 
     def start(self):
+        with open(self.filename,"w") as f:
+            f.write("")
         self.__stop = False
 
     def stop(self):

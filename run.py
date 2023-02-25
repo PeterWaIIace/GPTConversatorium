@@ -40,10 +40,10 @@ def buttonStart():
 
     personalityA  = bottle.request.json["A"]
     personalityB  = bottle.request.json["B"]
-    with open("A.txt","w+") as f:
+    with open("personA.txt","w+") as f:
         f.write(personalityA)
 
-    with open("B.txt","w+") as f:
+    with open("personB.txt","w+") as f:
         f.write(personalityB)
 
     Debate.start()
