@@ -11,8 +11,8 @@ class ConversationRoom:
 
         # https://github.com/acheong08/ChatGPT/wiki/Setup
 
-        self.chatGPT_1 =  ChatBot("A",organization=GPTconfig["organization"],apiKey=GPTconfig["apiKey"],personalityFile="A.txt")
-        self.chatGPT_2 =  ChatBot("B",organization=GPTconfig["organization"],apiKey=GPTconfig["apiKey"],personalityFile="B.txt")
+        self.chatGPT_1 =  ChatBot("A",organization=GPTconfig["organization"],apiKey=GPTconfig["apiKey"],personalityFile="personA.txt",debug=True)
+        self.chatGPT_2 =  ChatBot("B",organization=GPTconfig["organization"],apiKey=GPTconfig["apiKey"],personalityFile="personB.txt",debug=True)
 
         self.filename = recording_filename
 
@@ -20,8 +20,8 @@ class ConversationRoom:
         pass
 
     def updatePersonalities(self,GPTconfig):
-        self.chatGPT_1 =  ChatBot("A",organization=GPTconfig["organization"],apiKey=GPTconfig["apiKey"],personalityFile="A.txt")
-        self.chatGPT_2 =  ChatBot("B",organization=GPTconfig["organization"],apiKey=GPTconfig["apiKey"],personalityFile="B.txt")
+        self.chatGPT_1 =  ChatBot("A",organization=GPTconfig["organization"],apiKey=GPTconfig["apiKey"],personalityFile="personA.txt")
+        self.chatGPT_2 =  ChatBot("B",organization=GPTconfig["organization"],apiKey=GPTconfig["apiKey"],personalityFile="personB.txt")
 
 
     def update_file(self,gpt,message):
