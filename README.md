@@ -1,7 +1,7 @@
 # GPTConversatorium
 Let GPT talk to itself!
 
-![image](https://user-images.githubusercontent.com/40773550/221321414-94ae90f9-a361-4184-9f0d-e9aa12d393c0.png)
+![image](https://user-images.githubusercontent.com/40773550/221324934-3e3ece4d-8ef8-4bbb-8ce1-d5f47b2d7d84.png)
 
 
 This repository uses reversed engineered GPT API library revChatGPT. To start using it, open source code and change these two configs:
