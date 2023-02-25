@@ -6,6 +6,20 @@ import json
 import time
 import os
 
+def cleanFiles():
+    with open("A.txt","w+") as f:
+        f.write("")
+
+    with open("B.txt","w+") as f:
+        f.write("")
+
+    with open("personA.txt","w+") as f:
+        f.write("")
+
+    with open("personB.txt","w+") as f:
+        f.write("")
+cleanFiles()
+
 config = {}
 with open("config.json") as f:
     config = json.load(f)
@@ -36,16 +50,17 @@ def readJson():
 
 @bottle.post('/buttons/start')
 def buttonStart():
-    global Debate, _DebateThread
+    global Debate, _DebateThread,config
 
     personalityA  = bottle.request.json["A"]
     personalityB  = bottle.request.json["B"]
-    with open("personA.txt","w+") as f:
+    with open("personA.txt","w+",encoding="utf-8") as f:
         f.write(personalityA)
 
-    with open("personB.txt","w+") as f:
+    with open("personB.txt","w+",encoding="utf-8") as f:
         f.write(personalityB)
 
+    Debate.updatePersonalities(config)
     Debate.start()
 
 @bottle.post('/buttons/stop')
@@ -60,6 +75,6 @@ if __name__=="__main__":
     Debate.stop()
     _DebateThread = threading.Thread(target=runDebate)
     _DebateThread.start()
-    run(host='localhost', port=8088, debug=True, quiet=False)
+    run(host='localhost', port=8088, debug=False, quiet=True)
     Debate.stop()
     _DebateThread.join()

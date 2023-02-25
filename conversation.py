@@ -25,12 +25,12 @@ class ConversationRoom:
 
 
     def update_file(self,gpt,message):
-        with open(self.filename,"a") as f:
+        with open(self.filename,"a",encoding="utf-8") as f:
             scribe = f"\n<li>{message}</li>\n"
             f.write(scribe)
 
     def start(self):
-        with open(self.filename,"w") as f:
+        with open(self.filename,"w",encoding="utf-8") as f:
             f.write("")
         self.__stop = False
 
