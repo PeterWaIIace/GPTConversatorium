@@ -6,13 +6,18 @@ import time
 
 class ConversationRoom:
 
-    def __init__(self,GPTconfig,recording_filename):
+    def __init__(self,GPTconfig,recording_filename,botNameA="personA",botNameB="personB",length=100):
         self.init_message = "Hello"
 
         # https://github.com/acheong08/ChatGPT/wiki/Setup
 
-        self.chatGPT_1 =  ChatBot("A",organization=GPTconfig["organization"],apiKey=GPTconfig["apiKey"],personalityFile="personA.txt",debug=True)
-        self.chatGPT_2 =  ChatBot("B",organization=GPTconfig["organization"],apiKey=GPTconfig["apiKey"],personalityFile="personB.txt",debug=True)
+        self.length = length
+
+        self.botNameA = botNameA
+        self.botNameB = botNameB
+
+        self.chatGPT_1 =  ChatBot(self.botNameA,organization=GPTconfig["organization"],apiKey=GPTconfig["apiKey"],personalityFile=f"{self.botNameA}.txt",debug=True)
+        self.chatGPT_2 =  ChatBot(self.botNameB,organization=GPTconfig["organization"],apiKey=GPTconfig["apiKey"],personalityFile=f"{self.botNameB}.txt",debug=True)
 
         self.filename = recording_filename
 
@@ -20,8 +25,8 @@ class ConversationRoom:
         pass
 
     def updatePersonalities(self,GPTconfig):
-        self.chatGPT_1 =  ChatBot("A",organization=GPTconfig["organization"],apiKey=GPTconfig["apiKey"],personalityFile="personA.txt")
-        self.chatGPT_2 =  ChatBot("B",organization=GPTconfig["organization"],apiKey=GPTconfig["apiKey"],personalityFile="personB.txt")
+        self.chatGPT_1 =  ChatBot(self.botNameA,organization=GPTconfig["organization"],apiKey=GPTconfig["apiKey"],personalityFile=f"{self.botNameA}.txt")
+        self.chatGPT_2 =  ChatBot(self.botNameB,organization=GPTconfig["organization"],apiKey=GPTconfig["apiKey"],personalityFile=f"{self.botNameB}.txt")
 
 
     def update_file(self,gpt,message):
@@ -39,16 +44,23 @@ class ConversationRoom:
 
     def run(self):
 
+        counter = 0
+
         while(self.__stop):
             time.sleep(1)
 
         response = self.chatGPT_1.ask(self.init_message)
-        self.update_file("A",response)
-        while(not self.__stop):
+        self.update_file(self.botNameA,response)
+
+        while(not self.__stop and self.length > counter):
+
             response = self.chatGPT_2.ask(response)
-            self.update_file("B",response)
+            self.update_file(self.botNameB,response)
+
             response = self.chatGPT_1.ask(response)
-            self.update_file("A",response)
+            self.update_file(self.botNameA,response)
+
+            counter+=1
 
 
 
