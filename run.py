@@ -6,23 +6,17 @@ import json
 import time
 import os
 
-
-
 config = {}
 with open("config.json") as f:
     config = json.load(f)
 
 Debate = ConversationRoom(config,"recording.html")
-Debate.stop()
 
 def runDebate():
     Debate.run()
 
-_DebateThread = threading.Thread(target=runDebate)
-_DebateThread.start()
-
-conversation = False
-
+print("thread started!")
+# conversation = False
 
 @bottle.route('/')
 def index():
@@ -58,9 +52,14 @@ def buttonStart():
 def buttonStart():
     global Debate, _DebateThread
     print("STOPPING")
-    generate = False
 
     Debate.stop()
     _DebateThread.join()
 
-run(host='localhost', port=8080, debug=True, quiet=False)
+if __name__=="__main__":
+    Debate.stop()
+    _DebateThread = threading.Thread(target=runDebate)
+    _DebateThread.start()
+    run(host='localhost', port=8088, debug=True, quiet=False)
+    Debate.stop()
+    _DebateThread.join()

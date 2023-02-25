@@ -1,5 +1,6 @@
 const {useState,useEffect} = React;
 
+let personalities = {"A":"","B":""};
 
 function Personalities()
 {
@@ -9,13 +10,13 @@ function Personalities()
     const handlePersonality1 = event => {
         // 👇️ access textarea value
         setDisplayPersonality1(event.target.value);
-        prompt_parameters["outputReqs"] = event.target.value;
+        personalities["A"] = event.target.value;
     };
 
     const handlePersonality2 = event => {
         // 👇️ access textarea value
         setDisplayPersonality2(event.target.value);
-        prompt_parameters["outputReqs"] = event.target.value;
+        personalities["B"] = event.target.value;
     };
 
     return (
@@ -39,7 +40,37 @@ function Personalities()
 
 function Controls()
 {
+    const onStart = event => {
+        fetch(`${window.location.origin}/buttons/start`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                  },
+                body: JSON.stringify({
+                    "A":personalities["A"],
+                    "B":personalities["B"],
+                })
+            }
+        ).catch(error   => console.error('Error:', error));
+    }
 
+    const onStop = event => {
+        fetch(`${window.location.origin}/buttons/stop`,
+            {
+                method: 'POST'
+            }
+        ).catch(error   => console.error('Error:', error));
+    }
+
+    return (
+        <div className="row">
+            <div className="col" align="left">
+                <button onClick={onStart} className="btn btn-primary m-1 mt-2 col-4" title="Start">Start</button>
+                <button onClick={onStop} className="btn btn-primary m-1 mt-2 col-4" title="Stop">Stop</button>
+            </div>
+        </div>
+    )
 };
 
 function Dialog()
@@ -71,6 +102,7 @@ ReactDOM.render(
         <div className="row">
             <div className="col-sm">
                 <Personalities></Personalities>
+                <Controls></Controls>
             </div>
         </div>
         <div className="row">

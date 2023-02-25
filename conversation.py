@@ -38,7 +38,7 @@ class ConversationRoom:
     def run(self):
 
         while(self.__stop):
-            pass
+            time.sleep(1)
 
         response = self.chatGPT_1.ask(self.init_message)
         self.update_file("A",response)
