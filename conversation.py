@@ -24,7 +24,11 @@ class ConversationRoom:
         self.__stop = True
         pass
 
-    def updatePersonalities(self,GPTconfig):
+    def updatePersonalities(self,GPTconfig,botNameA,botNameB):
+
+        self.botNameA = botNameA
+        self.botNameB = botNameB
+
         self.chatGPT_1 =  ChatBot(self.botNameA,organization=GPTconfig["organization"],apiKey=GPTconfig["apiKey"],personalityFile=f"{self.botNameA}.txt")
         self.chatGPT_2 =  ChatBot(self.botNameB,organization=GPTconfig["organization"],apiKey=GPTconfig["apiKey"],personalityFile=f"{self.botNameB}.txt")
 

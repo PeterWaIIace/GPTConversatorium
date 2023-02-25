@@ -1,6 +1,41 @@
 const {useState,useEffect} = React;
 
 let personalities = {"A":"","B":""};
+let names = {"A":"PersonA","B":"PersonB"};
+
+function Names()
+{
+    const [displayName1,  setDisplayName1] = useState("PersonA");
+    const [displayName2,  setDisplayName2] = useState("PersonB");
+
+    const handleName1 = event => {
+        // 👇️ access textarea value
+        setDisplayName2(event.target.value);
+        names["A"] = event.target.value;
+    };
+
+    const handleName2 = event => {
+        // 👇️ access textarea value
+        setDisplayName1(event.target.value);
+        names["B"] = event.target.value;
+    };
+
+    return (
+        <div className="row">
+            <div className="col-6">
+                <div className="form-outline">
+                    <textarea className="form-control" id="displayName1" rows="1" onChange={handleName1} style={{ background: 'rgba(10,0,0,.5)'}} value={displayName1}></textarea>
+                </div>
+            </div>
+            <div className="col-6">
+                <div className="form-outline">
+                    <textarea className="form-control" id="displayName2" rows="1" onChange={handleName2} style={{ background: 'rgba(10,0,0,.2)'}} value={displayName2}></textarea>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 
 function Personalities()
 {
@@ -22,13 +57,11 @@ function Personalities()
     return (
         <div className="row">
             <div className="col-6">
-                <h3>Bot I:</h3>
                 <div className="form-outline">
                     <textarea className="form-control" id="displayPersonality1" rows="2" onChange={handlePersonality1} style={{ background: 'rgba(10,0,0,.5)'}} value={displayPersonality1}></textarea>
                 </div>
             </div>
             <div className="col-6">
-                <h3>Bot II:</h3>
                 <div className="form-outline">
                     <textarea className="form-control" id="displayPersonality2" rows="2" onChange={handlePersonality2} style={{ background: 'rgba(10,0,0,.5)'}} value={displayPersonality2}></textarea>
                 </div>
@@ -50,6 +83,8 @@ function Controls()
                 body: JSON.stringify({
                     "A":personalities["A"],
                     "B":personalities["B"],
+                    "NameA":names["A"],
+                    "NameB":names["B"],
                 })
             }
         ).catch(error   => console.error('Error:', error));
@@ -103,6 +138,7 @@ ReactDOM.render(
         </div>
         <div className="row">
             <div className="col-sm">
+                <Names></Names>
                 <Personalities></Personalities>
                 <Controls></Controls>
             </div>

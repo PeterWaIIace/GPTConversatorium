@@ -54,13 +54,16 @@ def buttonStart():
 
     personalityA  = bottle.request.json["A"]
     personalityB  = bottle.request.json["B"]
-    with open("personA.txt","w+",encoding="utf-8") as f:
+    nameA  = bottle.request.json["A"]
+    nameB  = bottle.request.json["B"]
+
+    with open(f"{nameA}.txt","w+",encoding="utf-8") as f:
         f.write(personalityA)
 
-    with open("personB.txt","w+",encoding="utf-8") as f:
+    with open(f"{nameB}.txt","w+",encoding="utf-8") as f:
         f.write(personalityB)
 
-    Debate.updatePersonalities(config)
+    Debate.updatePersonalities(config,nameA,nameB)
     Debate.start()
 
 @bottle.post('/buttons/stop')
